@@ -18,6 +18,12 @@ class BotTests(unittest.TestCase):
         self.assertTrue(bot.relevant(posts[0], cfg, now))
         self.assertFalse(bot.relevant(posts[1], cfg, now))
         self.assertFalse(bot.relevant(posts[0], cfg, now.replace(day=8)))
+        game = dict(posts[1], id='jogosempromoegratis/11')
+        game_cfg = {'keywords': ['ssd'], 'game_channels': ['jogosempromoegratis'],
+                    'max_age_hours': 6}
+        self.assertTrue(bot.relevant(game, game_cfg, now))
+        self.assertEqual(bot.payload(game, game_cfg)['username'], 'Ofertas de Jogos')
+        self.assertIn('Ofertas de Jogos', bot.payload(game, game_cfg)['embeds'][0]['author']['name'])
         self.assertEqual(bot.payload(posts[0])['allowed_mentions'], {'parse': []})
         self.assertEqual(bot.payload(posts[0])['embeds'][0]['image']['url'],
                          'https://cdn1.telesco.pe/file/produto_10.jpg')

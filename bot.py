@@ -72,14 +72,16 @@ def normalized(text):
 
 
 def relevant(post, cfg, now):
-    # Match product heading, not promotional boilerplate mentioning other products.
-    heading = normalized(post['text'].strip().split('\n')[0])
-    def contains(term):
-        return re.search(r'(?<!\w)' + re.escape(normalized(term)) + r'(?!\w)', heading)
-    if not any(contains(k) for k in cfg['keywords']):
-        return False
-    if any(contains(k) for k in cfg.get('exclude', [])):
-        return False
+    channel = post['id'].split('/', 1)[0]
+    if channel not in cfg.get('game_channels', []):
+        # Match product heading, not promotional boilerplate mentioning other products.
+        heading = normalized(post['text'].strip().split('\n')[0])
+        def contains(term):
+            return re.search(r'(?<!\w)' + re.escape(normalized(term)) + r'(?!\w)', heading)
+        if not any(contains(k) for k in cfg['keywords']):
+            return False
+        if any(contains(k) for k in cfg.get('exclude', [])):
+            return False
     try:
         age = (now - datetime.fromisoformat(post['date'])).total_seconds()
     except (ValueError, TypeError):
@@ -108,7 +110,11 @@ def payload(post, cfg=None):
     invite = cfg.get('discord_invite_url', '').strip()
     if re.fullmatch(r'https://(?:discord\.gg|discord\.com/invite)/[A-Za-z0-9-]+', invite):
         details += '\n\n[💬 Entre no Discord ➜](' + invite + ')'
-    embed = {'author': {'name': 'Ofertas de Hardware • Promoções ⚡'},
+    channel = post['id'].split('/', 1)[0]
+    game_offer = channel in cfg.get('game_channels', [])
+    author = ('Ofertas de Jogos • Promoções e jogos grátis 🎮' if game_offer else
+              'Ofertas de Hardware • Promoções ⚡')
+    embed = {'author': {'name': author},
              'title': '🛍️ ' + heading,
              'url': offer_url,
              'description': details,
@@ -124,7 +130,8 @@ def payload(post, cfg=None):
     if re.fullmatch(r'\d{17,20}', role_id):
         content = '🔥 Nova promoção para <@&' + role_id + '>'
         allowed['roles'] = [role_id]
-    return {'username': 'Ofertas de Hardware', 'content': content,
+    username = 'Ofertas de Jogos' if game_offer else 'Ofertas de Hardware'
+    return {'username': username, 'content': content,
             'allowed_mentions': allowed, 'embeds': [embed]}
 
 

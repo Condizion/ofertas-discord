@@ -1,5 +1,6 @@
 {
-  "channels": ["peperaiohardware", "Promos_tech1", "grape_tec"],
+  "channels": ["peperaiohardware", "Promos_tech1", "grape_tec", "jogosempromoegratis"],
+  "game_channels": ["jogosempromoegratis"],
   "discord_invite_url": "https://discord.gg/XGqtQFXur6",
   "discord_role_id": "",
   "keywords": ["placa de video", "placa-mae", "placa mae", "rtx", "radeon", "ryzen", "processador", "intel core", "ssd", "nvme", "memoria", "ddr4", "ddr5", "fonte", "gabinete", "cooler", "ventoinha", "monitor", "teclado", "mouse", "headset", "fone", "microfone", "notebook", "mini pc", "roteador", "wifi", "wi-fi"],
