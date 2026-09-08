@@ -8,6 +8,10 @@ on:
         description: 'Enviar apenas uma mensagem de teste no Discord'
         type: boolean
         default: false
+      enviar_ultimo_jogo:
+        description: 'Enviar a promoção de jogo mais recente no Discord'
+        type: boolean
+        default: false
 permissions:
   contents: write
 concurrency:
@@ -26,8 +30,11 @@ jobs:
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
           TESTAR: ${{ inputs.testar_webhook }}
+          ULTIMO_JOGO: ${{ inputs.enviar_ultimo_jogo }}
         run: |
-          if [ "$TESTAR" = "true" ]; then
+          if [ "$ULTIMO_JOGO" = "true" ]; then
+            python bot.py --send-latest-game
+          elif [ "$TESTAR" = "true" ]; then
             python bot.py --test-webhook
           else
             python bot.py
