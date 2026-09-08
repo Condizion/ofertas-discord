@@ -1,7 +1,7 @@
 name: Ofertas de Hardware
 on:
   schedule:
-    - cron: '7,22,37,52 * * * *'
+    - cron: '1,9,17,25,33,41,49,57 * * * *'
   workflow_dispatch:
     inputs:
       testar_webhook:
