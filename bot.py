@@ -30,6 +30,12 @@ class PreviewParser(HTMLParser):
             self.depth = 0
         if self.post is None:
             return
+        classes = attrs.get('class', '').split()
+        if tag == 'a' and 'tgme_widget_message_photo_wrap' in classes:
+            match = re.search(r"background-image:url\(['\"]?(https://[^)'\"]+)",
+                              attrs.get('style', ''))
+            if match:
+                self.post['image'] = match.group(1)
         if tag == 'time':
             self.post['date'] = attrs.get('datetime', '')
         if tag == 'div':
@@ -82,14 +88,18 @@ def payload(post):
     heading = post['text'].strip().split('\n')[0]
     heading = ' '.join(heading.split()[:20])[:200]
     price = re.search(r'R\$\s*[\d.,]+', post['text'])
-    return {'username': 'Ofertas de Hardware', 'allowed_mentions': {'parse': []},
-            'embeds': [{'title': heading,
+    embed = {'title': heading,
                         'url': 'https://t.me/' + post['id'],
                         'description': ('Preço anunciado: ' + price.group() + '\n' if price else '')
                             + 'Confira condições, cupons e link da loja na publicação original.',
                         'footer': {'text': 'Fonte: @' + post['id'].split('/')[0]
                                    + ' • preço não verificado na loja'},
-                        'color': 3066993}]}
+                        'color': 3066993}
+    image = post.get('image', '')
+    if re.fullmatch(r'https://cdn\d*\.telesco\.pe/file/[A-Za-z0-9_-]+\.(?:jpg|jpeg|png|webp)', image):
+        embed['image'] = {'url': image}
+    return {'username': 'Ofertas de Hardware', 'allowed_mentions': {'parse': []},
+            'embeds': [embed]}
 
 
 def fetch(channel, seen, max_pages):

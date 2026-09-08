@@ -20,7 +20,7 @@ Não verifica descontos nem preço final na loja. Cupons e condições ficam na 
 5. Actions → Ofertas de Hardware → Run workflow. Marque `testar_webhook` para enviar
    uma única mensagem de teste ao canal. Depois execute novamente com a opção desmarcada
    para inicializar o histórico. Essa inicialização não envia ofertas antigas.
-6. As execuções seguintes procuram novas ofertas a cada 15 minutos. Veja os resultados
+6. As execuções seguintes procuram novas ofertas a cada 8 minutos. Veja os resultados
    na aba Actions. Para parar: Ofertas de Hardware → menu ⋯ → Disable workflow.
 
 ## Personalizar
@@ -31,6 +31,7 @@ Inicialmente inclui GPUs, CPUs, placas-mãe, memória, SSD, fontes, gabinetes,
 refrigeração, monitores, periféricos, áudio, notebooks e rede.
 Até 8 mensagens por execução, ofertas com até 6 horas e até 3 páginas por fonte.
 Anúncios só em imagem ou sem nome do produto no texto podem não passar no filtro.
+Quando a publicação contém uma foto pública, ela aparece no card do Discord.
 Não há classificação garantida de loja quando o anúncio usa link encurtado.
 
 ## Limitações de operação

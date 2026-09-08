@@ -5,7 +5,7 @@ from pathlib import Path
 from unittest.mock import patch
 import bot
 
-HTML = '''<div data-post="canal/10"><div class="tgme_widget_message_text">SSD <b>1TB</b><br/>R&#36; 299</div><time datetime="2026-09-07T12:00:00+00:00"></time></div>
+HTML = '''<div data-post="canal/10"><a class="tgme_widget_message_photo_wrap" style="width:500px;background-image:url('https://cdn1.telesco.pe/file/produto_10.jpg')"></a><div class="tgme_widget_message_text">SSD <b>1TB</b><br/>R&#36; 299</div><time datetime="2026-09-07T12:00:00+00:00"></time></div>
 <div data-post="canal/11"><div class="tgme_widget_message_text">Smart TV<br/>R$ 999</div><time datetime="2026-09-07T12:01:00+00:00"></time></div>'''
 
 
@@ -19,6 +19,8 @@ class BotTests(unittest.TestCase):
         self.assertFalse(bot.relevant(posts[1], cfg, now))
         self.assertFalse(bot.relevant(posts[0], cfg, now.replace(day=8)))
         self.assertEqual(bot.payload(posts[0])['allowed_mentions'], {'parse': []})
+        self.assertEqual(bot.payload(posts[0])['embeds'][0]['image']['url'],
+                         'https://cdn1.telesco.pe/file/produto_10.jpg')
 
     def test_first_run_and_dedup(self):
         import json
