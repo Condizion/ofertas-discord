@@ -185,6 +185,7 @@ def main():
     args = argparse.ArgumentParser()
     args.add_argument('--preview', help='Arquivo HTML local: não envia nem altera estado')
     args.add_argument('--test-webhook', action='store_true')
+    args.add_argument('--send-latest-game', action='store_true')
     opts = args.parse_args()
     cfg = json.loads((ROOT / 'config.json').read_text(encoding='utf-8'))
     now = datetime.now(timezone.utc)
@@ -201,6 +202,16 @@ def main():
         send(webhook, {'content': '✅ Ofertas de Hardware conectado. Fonte: @peperaiohardware. '
                                   'Novas ofertas serão filtradas automaticamente.',
                        'allowed_mentions': {'parse': []}})
+        return
+    if opts.send_latest_game:
+        game_channels = cfg.get('game_channels', [])
+        if not game_channels:
+            raise RuntimeError('Nenhum canal de jogos configurado.')
+        posts = fetch(game_channels[-1], set(), 1)
+        if not posts:
+            raise RuntimeError('Nenhuma promoção de jogo encontrada.')
+        send(webhook, payload(posts[-1], cfg))
+        print('Última promoção de jogo enviada:', posts[-1]['id'])
         return
     path = ROOT / 'state.json'
     state = json.loads(path.read_text(encoding='utf-8')) if path.exists() else {}

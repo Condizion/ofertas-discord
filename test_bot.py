@@ -71,6 +71,23 @@ class BotTests(unittest.TestCase):
                     bot.main()
                 self.assertEqual(json.loads((root / 'state.json').read_text()), {'canal': []})
 
+    def test_send_latest_game(self):
+        import json
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            cfg = {'channels': [], 'game_channels': ['jogosempromoegratis'],
+                   'max_pages': 1, 'max_posts_per_run': 8}
+            (root / 'config.json').write_text(json.dumps(cfg), encoding='utf-8')
+            game = dict(bot.parse(HTML)[0], id='jogosempromoegratis/12')
+            with patch.object(bot, 'ROOT', root), \
+                 patch('sys.argv', ['bot.py', '--send-latest-game']), \
+                 patch.dict('os.environ', {'DISCORD_WEBHOOK_URL': 'placeholder'}), \
+                 patch.object(bot, 'fetch', return_value=[game]), \
+                 patch.object(bot, 'send') as send:
+                bot.main()
+                send.assert_called_once()
+                self.assertEqual(send.call_args.args[1]['username'], 'Ofertas de Jogos')
+
 
 if __name__ == '__main__':
     unittest.main()
