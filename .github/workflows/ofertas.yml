@@ -1,7 +1,7 @@
 name: Ofertas de Hardware
 on:
   schedule:
-    - cron: '1,9,17,25,33,41,49,57 * * * *'
+    - cron: '*/5 * * * *'
   workflow_dispatch:
     inputs:
       testar_webhook:
@@ -16,7 +16,7 @@ concurrency:
 jobs:
   ofertas:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 6
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -30,6 +30,8 @@ jobs:
           if [ "$TESTAR" = "true" ]; then
             python bot.py --test-webhook
           else
+            python bot.py
+            sleep 150
             python bot.py
           fi
       - name: Salvar histórico inclusive após falha parcial
