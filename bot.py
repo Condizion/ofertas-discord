@@ -25,7 +25,7 @@ class PreviewParser(HTMLParser):
     def handle_starttag(self, tag, attrs):
         attrs = dict(attrs)
         if attrs.get('data-post'):
-            self.post = {'id': attrs['data-post'], 'text': '', 'date': ''}
+            self.post = {'id': attrs['data-post'], 'text': '', 'date': '', 'links': []}
             self.posts.append(self.post)
             self.depth = 0
         if self.post is None:
@@ -36,6 +36,10 @@ class PreviewParser(HTMLParser):
                               attrs.get('style', ''))
             if match:
                 self.post['image'] = match.group(1)
+        if tag == 'a' and self.depth:
+            href = attrs.get('href', '')
+            if href.startswith(('https://', 'http://')):
+                self.post['links'].append(href)
         if tag == 'time':
             self.post['date'] = attrs.get('datetime', '')
         if tag == 'div':
@@ -83,23 +87,45 @@ def relevant(post, cfg, now):
     return 0 <= age <= cfg['max_age_hours'] * 3600
 
 
-def payload(post):
-    # Short title and price only; full offer/coupons remain at the credited source.
+def payload(post, cfg=None):
+    cfg = cfg or {}
     heading = post['text'].strip().split('\n')[0]
     heading = ' '.join(heading.split()[:20])[:200]
     price = re.search(r'R\$\s*[\d.,]+', post['text'])
-    embed = {'title': heading,
-                        'url': 'https://t.me/' + post['id'],
-                        'description': ('Preço anunciado: ' + price.group() + '\n' if price else '')
-                            + 'Confira condições, cupons e link da loja na publicação original.',
-                        'footer': {'text': 'Fonte: @' + post['id'].split('/')[0]
-                                   + ' • preço não verificado na loja'},
-                        'color': 3066993}
+    offer_url = next((link for link in post.get('links', [])
+                      if 't.me/' not in link and 'telegram.' not in link),
+                     'https://t.me/' + post['id'])
+    coupon_lines = [line for line in post['text'].splitlines()
+                    if 'cupom' in normalized(line)]
+    coupons = []
+    for line in coupon_lines:
+        coupons.extend(re.findall(r'(?<![A-Z0-9])[A-Z][A-Z0-9_-]{3,}(?![A-Z0-9])', line))
+    coupons = list(dict.fromkeys(coupons))[:4]
+    details = ('💰 **Preço**\n**' + price.group() + '**' if price else
+               '💰 **Confira o preço na oferta**')
+    if coupons:
+        details += '\n\n🏷️ **Cupons**\n' + ' • '.join('`' + c + '`' for c in coupons)
+    invite = cfg.get('discord_invite_url', '').strip()
+    if re.fullmatch(r'https://(?:discord\.gg|discord\.com/invite)/[A-Za-z0-9-]+', invite):
+        details += '\n\n[💬 Entre no Discord ➜](' + invite + ')'
+    embed = {'author': {'name': 'Ofertas de Hardware • Promoções ⚡'},
+             'title': '🛍️ ' + heading,
+             'url': offer_url,
+             'description': details,
+             'footer': {'text': 'Fonte: @' + post['id'].split('/')[0]
+                        + ' • confirme preço e estoque na loja'},
+             'color': 15158332}
     image = post.get('image', '')
     if re.fullmatch(r'https://cdn\d*\.telesco\.pe/file/[A-Za-z0-9_-]+\.(?:jpg|jpeg|png|webp)', image):
         embed['image'] = {'url': image}
-    return {'username': 'Ofertas de Hardware', 'allowed_mentions': {'parse': []},
-            'embeds': [embed]}
+    role_id = str(cfg.get('discord_role_id', '')).strip()
+    content = ''
+    allowed = {'parse': []}
+    if re.fullmatch(r'\d{17,20}', role_id):
+        content = '🔥 Nova promoção para <@&' + role_id + '>'
+        allowed['roles'] = [role_id]
+    return {'username': 'Ofertas de Hardware', 'content': content,
+            'allowed_mentions': allowed, 'embeds': [embed]}
 
 
 def fetch(channel, seen, max_pages):
@@ -159,7 +185,7 @@ def main():
         posts = parse(Path(opts.preview).read_text(encoding='utf-8'))
         matches = [p for p in posts if relevant(p, cfg, now)]
         print(json.dumps({'lidas': len(posts), 'filtradas': len(matches),
-                          'exemplos': [payload(p) for p in matches[:2]]}, ensure_ascii=True))
+                          'exemplos': [payload(p, cfg) for p in matches[:2]]}, ensure_ascii=True))
         return
     webhook = os.environ.get('DISCORD_WEBHOOK_URL', '').strip()
     if not webhook:
@@ -187,7 +213,7 @@ def main():
             if relevant(post, cfg, now):
                 if sent >= cfg['max_posts_per_run']:
                     break
-                send(webhook, payload(post))
+                send(webhook, payload(post, cfg))
                 sent += 1
                 time.sleep(2)
             seen_list.append(post['id'])

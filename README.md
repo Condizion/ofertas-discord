@@ -14,6 +14,8 @@ O bot procura novas ofertas a cada oito minutos e mantém um histórico das publ
 - Consulta programada a cada oito minutos.
 - Controle de ofertas já processadas.
 - Crédito e acesso direto à publicação original.
+- Menção automática de um cargo configurado no servidor.
+- Link de convite do Discord integrado aos cards.
 
 ## Fonte das ofertas
 

@@ -5,14 +5,14 @@ from pathlib import Path
 from unittest.mock import patch
 import bot
 
-HTML = '''<div data-post="canal/10"><a class="tgme_widget_message_photo_wrap" style="width:500px;background-image:url('https://cdn1.telesco.pe/file/produto_10.jpg')"></a><div class="tgme_widget_message_text">SSD <b>1TB</b><br/>R&#36; 299</div><time datetime="2026-09-07T12:00:00+00:00"></time></div>
+HTML = '''<div data-post="canal/10"><a class="tgme_widget_message_photo_wrap" style="width:500px;background-image:url('https://cdn1.telesco.pe/file/produto_10.jpg')"></a><div class="tgme_widget_message_text">SSD <b>1TB</b><br/>R&#36; 299 com cupom: TECH10<br/><a href="https://loja.example/produto">Comprar</a></div><time datetime="2026-09-07T12:00:00+00:00"></time></div>
 <div data-post="canal/11"><div class="tgme_widget_message_text">Smart TV<br/>R$ 999</div><time datetime="2026-09-07T12:01:00+00:00"></time></div>'''
 
 
 class BotTests(unittest.TestCase):
     def test_parser_filter_and_expiration(self):
         posts = bot.parse(HTML)
-        self.assertEqual(posts[0]['text'], 'SSD 1TB\nR$ 299')
+        self.assertEqual(posts[0]['text'], 'SSD 1TB\nR$ 299 com cupom: TECH10\nComprar')
         cfg = {'keywords': ['ssd'], 'max_age_hours': 6}
         now = datetime(2026, 9, 7, 13, tzinfo=timezone.utc)
         self.assertTrue(bot.relevant(posts[0], cfg, now))
@@ -21,6 +21,13 @@ class BotTests(unittest.TestCase):
         self.assertEqual(bot.payload(posts[0])['allowed_mentions'], {'parse': []})
         self.assertEqual(bot.payload(posts[0])['embeds'][0]['image']['url'],
                          'https://cdn1.telesco.pe/file/produto_10.jpg')
+        card = bot.payload(posts[0], {'discord_role_id': '123456789012345678',
+                                      'discord_invite_url': 'https://discord.gg/exemplo'})
+        self.assertEqual(card['content'], '🔥 Nova promoção para <@&123456789012345678>')
+        self.assertEqual(card['allowed_mentions']['roles'], ['123456789012345678'])
+        self.assertEqual(card['embeds'][0]['url'], 'https://loja.example/produto')
+        self.assertIn('`TECH10`', card['embeds'][0]['description'])
+        self.assertIn('Entre no Discord', card['embeds'][0]['description'])
 
     def test_first_run_and_dedup(self):
         import json
