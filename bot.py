@@ -122,7 +122,17 @@ def payload(post, cfg=None):
                         + ' • confirme preço e estoque na loja'},
              'color': 15158332}
     image = post.get('image', '')
+    if game_offer and not image:
+        steam_app = re.search(
+            r'https?://store\.steampowered\.com/app/(\d+)(?:/|\b)', offer_url)
+        if steam_app:
+            image = ('https://shared.fastly.steamstatic.com/store_item_assets/'
+                     'steam/apps/' + steam_app.group(1) + '/header.jpg')
     if re.fullmatch(r'https://cdn\d*\.telesco\.pe/file/[A-Za-z0-9_-]+\.(?:jpg|jpeg|png|webp)', image):
+        embed['image'] = {'url': image}
+    elif re.fullmatch(
+            r'https://shared\.fastly\.steamstatic\.com/store_item_assets/'
+            r'steam/apps/\d+/header\.jpg', image):
         embed['image'] = {'url': image}
     role_id = str(cfg.get('discord_role_id', '')).strip()
     content = ''

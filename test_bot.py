@@ -24,6 +24,10 @@ class BotTests(unittest.TestCase):
         self.assertTrue(bot.relevant(game, game_cfg, now))
         self.assertEqual(bot.payload(game, game_cfg)['username'], 'Ofertas de Jogos')
         self.assertIn('Ofertas de Jogos', bot.payload(game, game_cfg)['embeds'][0]['author']['name'])
+        steam_game = dict(game, links=['https://store.steampowered.com/app/301860/Submerged'])
+        self.assertEqual(
+            bot.payload(steam_game, game_cfg)['embeds'][0]['image']['url'],
+            'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/301860/header.jpg')
         self.assertEqual(bot.payload(posts[0])['allowed_mentions'], {'parse': []})
         self.assertEqual(bot.payload(posts[0])['embeds'][0]['image']['url'],
                          'https://cdn1.telesco.pe/file/produto_10.jpg')
