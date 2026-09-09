@@ -28,6 +28,13 @@ class BotTests(unittest.TestCase):
         self.assertEqual(
             bot.payload(steam_game, game_cfg)['embeds'][0]['image']['url'],
             'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/301860/header.jpg')
+        steam_fields = bot.payload(steam_game, game_cfg)['embeds'][0]['fields']
+        self.assertEqual(steam_fields[0]['value'], 'Steam')
+        self.assertEqual(steam_fields[1]['value'], 'PC')
+        epic = dict(game, links=['https://store.epicgames.com/pt-BR/p/exemplo'])
+        self.assertEqual(
+            [field['value'] for field in bot.payload(epic, game_cfg)['embeds'][0]['fields']],
+            ['Epic Games Store', 'PC'])
         self.assertEqual(bot.payload(posts[0])['allowed_mentions'], {'parse': []})
         self.assertEqual(bot.payload(posts[0])['embeds'][0]['image']['url'],
                          'https://cdn1.telesco.pe/file/produto_10.jpg')

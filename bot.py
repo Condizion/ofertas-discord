@@ -10,6 +10,7 @@ from datetime import datetime, timezone
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.error import HTTPError, URLError
+from urllib.parse import urlparse
 from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parent
@@ -89,6 +90,40 @@ def relevant(post, cfg, now):
     return 0 <= age <= cfg['max_age_hours'] * 3600
 
 
+def game_store_platform(url, text=''):
+    """Return a conservative store/platform label for a game offer."""
+    host = urlparse(url).hostname or ''
+    host = host.lower().removeprefix('www.')
+    sources = (
+        (('store.steampowered.com',), 'Steam', 'PC'),
+        (('store.epicgames.com',), 'Epic Games Store', 'PC'),
+        (('gog.com',), 'GOG', 'PC'),
+        (('nuuvem.com',), 'Nuuvem', 'PC'),
+        (('greenmangaming.com',), 'Green Man Gaming', 'PC'),
+        (('fanatical.com',), 'Fanatical', 'PC'),
+        (('humblebundle.com',), 'Humble Bundle', 'PC'),
+        (('itch.io',), 'itch.io', 'PC'),
+        (('xbox.com', 'microsoft.com'), 'Microsoft Store', 'Xbox / PC'),
+        (('store.playstation.com',), 'PlayStation Store', 'PlayStation'),
+        (('nintendo.com',), 'Nintendo eShop', 'Nintendo Switch'),
+    )
+    for domains, store, platform in sources:
+        if any(host == domain or host.endswith('.' + domain) for domain in domains):
+            return store, platform
+    words = normalized(text)
+    inferred = (
+        ('steam', 'Steam', 'PC'),
+        ('epic games', 'Epic Games Store', 'PC'),
+        ('playstation', 'PlayStation Store', 'PlayStation'),
+        ('xbox', 'Microsoft Store', 'Xbox'),
+        ('nintendo switch', 'Nintendo eShop', 'Nintendo Switch'),
+    )
+    for marker, store, platform in inferred:
+        if marker in words:
+            return store, platform
+    return 'Não identificada', 'Não identificada'
+
+
 def payload(post, cfg=None):
     cfg = cfg or {}
     heading = post['text'].strip().split('\n')[0]
@@ -121,6 +156,12 @@ def payload(post, cfg=None):
              'footer': {'text': 'Fonte: @' + post['id'].split('/')[0]
                         + ' • confirme preço e estoque na loja'},
              'color': 15158332}
+    if game_offer:
+        store, platform = game_store_platform(offer_url, post['text'])
+        embed['fields'] = [
+            {'name': '🏪 Loja', 'value': store, 'inline': True},
+            {'name': '🎮 Plataforma', 'value': platform, 'inline': True},
+        ]
     image = post.get('image', '')
     if game_offer and not image:
         steam_app = re.search(
