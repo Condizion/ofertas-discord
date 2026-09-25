@@ -1,24 +1,5 @@
 {
   "peperaiohardware": [
-    "peperaiohardware/110368",
-    "peperaiohardware/110369",
-    "peperaiohardware/110370",
-    "peperaiohardware/110371",
-    "peperaiohardware/110372",
-    "peperaiohardware/110373",
-    "peperaiohardware/110374",
-    "peperaiohardware/110375",
-    "peperaiohardware/110376",
-    "peperaiohardware/110377",
-    "peperaiohardware/110378",
-    "peperaiohardware/110379",
-    "peperaiohardware/110380",
-    "peperaiohardware/110381",
-    "peperaiohardware/110382",
-    "peperaiohardware/110383",
-    "peperaiohardware/110384",
-    "peperaiohardware/110385",
-    "peperaiohardware/110386",
     "peperaiohardware/110387",
     "peperaiohardware/110388",
     "peperaiohardware/110389",
@@ -1999,7 +1980,26 @@
     "peperaiohardware/112870",
     "peperaiohardware/112871",
     "peperaiohardware/112872",
-    "peperaiohardware/112873"
+    "peperaiohardware/112873",
+    "peperaiohardware/112890",
+    "peperaiohardware/112891",
+    "peperaiohardware/112892",
+    "peperaiohardware/112893",
+    "peperaiohardware/112894",
+    "peperaiohardware/112895",
+    "peperaiohardware/112896",
+    "peperaiohardware/112897",
+    "peperaiohardware/112898",
+    "peperaiohardware/112899",
+    "peperaiohardware/112900",
+    "peperaiohardware/112901",
+    "peperaiohardware/112902",
+    "peperaiohardware/112903",
+    "peperaiohardware/112904",
+    "peperaiohardware/112905",
+    "peperaiohardware/112906",
+    "peperaiohardware/112907",
+    "peperaiohardware/112908"
   ],
   "Promos_tech1": [
     "Promos_tech1/64804",
@@ -3087,7 +3087,8 @@
     "Promos_tech1/66143",
     "Promos_tech1/66144",
     "Promos_tech1/66146",
-    "Promos_tech1/66147"
+    "Promos_tech1/66147",
+    "Promos_tech1/66148"
   ],
   "grape_tec": [
     "grape_tec/200208",
@@ -4366,7 +4367,10 @@
     "grape_tec/204017",
     "grape_tec/204018",
     "grape_tec/204019",
-    "grape_tec/204020"
+    "grape_tec/204020",
+    "grape_tec/204074",
+    "grape_tec/204075",
+    "grape_tec/204076"
   ],
   "jogosempromoegratis": [
     "jogosempromoegratis/7438",
