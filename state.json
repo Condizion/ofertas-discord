@@ -1,9 +1,5 @@
 {
   "peperaiohardware": [
-    "peperaiohardware/110664",
-    "peperaiohardware/110665",
-    "peperaiohardware/110666",
-    "peperaiohardware/110667",
     "peperaiohardware/110668",
     "peperaiohardware/110669",
     "peperaiohardware/110670",
@@ -1999,7 +1995,11 @@
     "peperaiohardware/113214",
     "peperaiohardware/113215",
     "peperaiohardware/113216",
-    "peperaiohardware/113217"
+    "peperaiohardware/113217",
+    "peperaiohardware/113218",
+    "peperaiohardware/113219",
+    "peperaiohardware/113220",
+    "peperaiohardware/113221"
   ],
   "Promos_tech1": [
     "Promos_tech1/64804",
@@ -3153,7 +3153,13 @@
     "Promos_tech1/66212",
     "Promos_tech1/66213",
     "Promos_tech1/66214",
-    "Promos_tech1/66215"
+    "Promos_tech1/66215",
+    "Promos_tech1/66216",
+    "Promos_tech1/66217",
+    "Promos_tech1/66218",
+    "Promos_tech1/66219",
+    "Promos_tech1/66220",
+    "Promos_tech1/66221"
   ],
   "grape_tec": [
     "grape_tec/200208",
@@ -4607,7 +4613,34 @@
     "grape_tec/204385",
     "grape_tec/204386",
     "grape_tec/204387",
-    "grape_tec/204429"
+    "grape_tec/204429",
+    "grape_tec/204449",
+    "grape_tec/204450",
+    "grape_tec/204451",
+    "grape_tec/204452",
+    "grape_tec/204453",
+    "grape_tec/204454",
+    "grape_tec/204455",
+    "grape_tec/204456",
+    "grape_tec/204457",
+    "grape_tec/204458",
+    "grape_tec/204459",
+    "grape_tec/204460",
+    "grape_tec/204461",
+    "grape_tec/204462",
+    "grape_tec/204463",
+    "grape_tec/204464",
+    "grape_tec/204465",
+    "grape_tec/204466",
+    "grape_tec/204467",
+    "grape_tec/204468",
+    "grape_tec/204469",
+    "grape_tec/204470",
+    "grape_tec/204471",
+    "grape_tec/204472",
+    "grape_tec/204473",
+    "grape_tec/204474",
+    "grape_tec/204475"
   ],
   "jogosempromoegratis": [
     "jogosempromoegratis/7438",
