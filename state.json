@@ -1,18 +1,5 @@
 {
   "peperaiohardware": [
-    "peperaiohardware/111008",
-    "peperaiohardware/111009",
-    "peperaiohardware/111018",
-    "peperaiohardware/111019",
-    "peperaiohardware/111020",
-    "peperaiohardware/111021",
-    "peperaiohardware/111022",
-    "peperaiohardware/111023",
-    "peperaiohardware/111024",
-    "peperaiohardware/111025",
-    "peperaiohardware/111026",
-    "peperaiohardware/111027",
-    "peperaiohardware/111028",
     "peperaiohardware/111029",
     "peperaiohardware/111030",
     "peperaiohardware/111031",
@@ -1999,7 +1986,20 @@
     "peperaiohardware/113580",
     "peperaiohardware/113581",
     "peperaiohardware/113582",
-    "peperaiohardware/113583"
+    "peperaiohardware/113583",
+    "peperaiohardware/113584",
+    "peperaiohardware/113585",
+    "peperaiohardware/113586",
+    "peperaiohardware/113587",
+    "peperaiohardware/113588",
+    "peperaiohardware/113589",
+    "peperaiohardware/113590",
+    "peperaiohardware/113591",
+    "peperaiohardware/113592",
+    "peperaiohardware/113593",
+    "peperaiohardware/113594",
+    "peperaiohardware/113595",
+    "peperaiohardware/113596"
   ],
   "Promos_tech1": [
     "Promos_tech1/64804",
@@ -3316,7 +3316,9 @@
     "Promos_tech1/66379",
     "Promos_tech1/66380",
     "Promos_tech1/66381",
-    "Promos_tech1/66382"
+    "Promos_tech1/66382",
+    "Promos_tech1/66383",
+    "Promos_tech1/66384"
   ],
   "grape_tec": [
     "grape_tec/200208",
@@ -4993,7 +4995,40 @@
     "grape_tec/204925",
     "grape_tec/204926",
     "grape_tec/204927",
-    "grape_tec/204928"
+    "grape_tec/204928",
+    "grape_tec/204929",
+    "grape_tec/204930",
+    "grape_tec/204931",
+    "grape_tec/204932",
+    "grape_tec/204933",
+    "grape_tec/204934",
+    "grape_tec/204935",
+    "grape_tec/204936",
+    "grape_tec/204937",
+    "grape_tec/204938",
+    "grape_tec/204939",
+    "grape_tec/204940",
+    "grape_tec/204941",
+    "grape_tec/204942",
+    "grape_tec/204943",
+    "grape_tec/204944",
+    "grape_tec/204945",
+    "grape_tec/204946",
+    "grape_tec/204947",
+    "grape_tec/204948",
+    "grape_tec/204949",
+    "grape_tec/204950",
+    "grape_tec/204951",
+    "grape_tec/204952",
+    "grape_tec/204953",
+    "grape_tec/204954",
+    "grape_tec/204955",
+    "grape_tec/204956",
+    "grape_tec/204957",
+    "grape_tec/204958",
+    "grape_tec/204959",
+    "grape_tec/204960",
+    "grape_tec/204961"
   ],
   "jogosempromoegratis": [
     "jogosempromoegratis/7438",
@@ -5283,6 +5318,7 @@
     "jogosempromoegratis/7722",
     "jogosempromoegratis/7723",
     "jogosempromoegratis/7724",
-    "jogosempromoegratis/7725"
+    "jogosempromoegratis/7725",
+    "jogosempromoegratis/7726"
   ]
 }
