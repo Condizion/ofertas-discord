@@ -1,13 +1,5 @@
 {
   "peperaiohardware": [
-    "peperaiohardware/114267",
-    "peperaiohardware/114268",
-    "peperaiohardware/114269",
-    "peperaiohardware/114270",
-    "peperaiohardware/114271",
-    "peperaiohardware/114272",
-    "peperaiohardware/114273",
-    "peperaiohardware/114274",
     "peperaiohardware/114275",
     "peperaiohardware/114276",
     "peperaiohardware/114290",
@@ -1999,7 +1991,15 @@
     "peperaiohardware/120649",
     "peperaiohardware/120650",
     "peperaiohardware/120651",
-    "peperaiohardware/120652"
+    "peperaiohardware/120652",
+    "peperaiohardware/120653",
+    "peperaiohardware/120654",
+    "peperaiohardware/120655",
+    "peperaiohardware/120656",
+    "peperaiohardware/120657",
+    "peperaiohardware/120658",
+    "peperaiohardware/120659",
+    "peperaiohardware/120660"
   ],
   "Promos_tech1": [
     "Promos_tech1/64804",
