@@ -1,6 +1,5 @@
 {
   "peperaiohardware": [
-    "peperaiohardware/117241",
     "peperaiohardware/117242",
     "peperaiohardware/117243",
     "peperaiohardware/117244",
@@ -1999,7 +1998,8 @@
     "peperaiohardware/123301",
     "peperaiohardware/123302",
     "peperaiohardware/123303",
-    "peperaiohardware/123304"
+    "peperaiohardware/123304",
+    "peperaiohardware/123373"
   ],
   "Promos_tech1": [
     "Promos_tech1/65037",
